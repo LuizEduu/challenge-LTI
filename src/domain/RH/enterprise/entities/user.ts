@@ -64,7 +64,7 @@ export class User extends Entity<UserProps> {
     return new User(
       {
         ...props,
-        role: props.role ?? Role.Employee,
+        role: props.role ?? Role.employee,
       },
       id,
     );

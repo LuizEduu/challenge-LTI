@@ -1,7 +1,8 @@
+import { Optional } from '@/core/types/optional';
 import { Entity } from 'src/core/entities/entity';
 import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
 
-enum Role {
+export enum Role {
   Employee = 'employee',
   Manager = 'manager',
 }
@@ -11,8 +12,8 @@ export type UserProps = {
   email: string;
   password: string;
   role: Role;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
 };
 
 export class User extends Entity<UserProps> {
@@ -56,7 +57,10 @@ export class User extends Entity<UserProps> {
     return this.props.updatedAt;
   }
 
-  static create(props: UserProps, id?: UniqueEntityID) {
+  static create(
+    props: Optional<UserProps, 'createdAt' | 'updatedAt'>,
+    id?: UniqueEntityID,
+  ) {
     return new User(props, id);
   }
 }

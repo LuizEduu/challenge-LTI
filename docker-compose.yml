@@ -1,0 +1,28 @@
+
+services:
+  db:
+    image: mysql:latest
+    container_name: challenge-lti-mysql
+    restart: always
+    environment:
+      - MYSQL_USER=docker
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_DATABASE=RH_management_system
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-volume:/var/lib/mysql
+
+  app:
+    container_name: challenge-lti-app
+    build: .
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/node/app 
+
+volumes:
+  mysql-volume:
+    driver: local

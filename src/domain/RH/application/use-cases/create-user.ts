@@ -9,7 +9,7 @@ type CreateUserUseCaseRequest = {
   name: string;
   email: string;
   password: string;
-  role: Role;
+  role: string;
 };
 
 type CreateUserUseCaseResponse = Either<
@@ -44,7 +44,7 @@ export class CreateUserUseCase {
       name,
       email,
       password: hashedPassword,
-      role,
+      role: Role[],
     });
 
     await this.usersRepository.create(user);

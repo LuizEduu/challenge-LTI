@@ -3,8 +3,8 @@ import { Entity } from 'src/core/entities/entity';
 import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
 
 export enum Role {
-  Employee = 'employee',
-  Manager = 'manager',
+  employee = 'employee',
+  manager = 'manager',
 }
 
 export type UserProps = {
@@ -61,6 +61,12 @@ export class User extends Entity<UserProps> {
     props: Optional<UserProps, 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityID,
   ) {
-    return new User(props, id);
+    return new User(
+      {
+        ...props,
+        role: props.role ?? Role.Employee,
+      },
+      id,
+    );
   }
 }

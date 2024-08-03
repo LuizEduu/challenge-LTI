@@ -3,7 +3,7 @@ import { Either, left, right } from '@/core/either';
 import { BenefitNotFoundError } from './errors/benefit-not-found-error';
 import { BenefitsRepository } from '../repositories/benefits-repository';
 import { NotAuthorizedError } from './errors/not-authorized-error';
-import { UserBenefitsRepository } from '../repositories/user-benefits-repository';
+import { UsersBenefitsRepository } from '../repositories/users-benefits-repository';
 
 type DeleteBenefitUseCaseRequest = {
   id: string;
@@ -15,7 +15,7 @@ type DeleteBenefitUseCaseResponse = Either<BenefitNotFoundError, null>;
 export class DeleteBenefitUseCase {
   constructor(
     private benefitsRepository: BenefitsRepository,
-    private userBenefitsRepository: UserBenefitsRepository,
+    private userBenefitsRepository: UsersBenefitsRepository,
   ) {}
 
   async execute({

@@ -20,6 +20,7 @@ const createAccountBodySchema = z.object({
   password: z.string(),
   role: z.enum(['emplooye', 'manager']),
   departmentsIds: z.array(z.string()).optional(),
+  benefitsIds: z.array(z.string()).optional(),
 });
 
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>;
@@ -32,7 +33,7 @@ export class CreateAccountController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async handle(@Body() body: CreateAccountBodySchema) {
-    const { name, email, password, role, departmentsIds } = body;
+    const { name, email, password, role, departmentsIds, benefitsIds } = body;
 
     const result = await this.useCase.execute({
       name,
@@ -40,6 +41,7 @@ export class CreateAccountController {
       password,
       role,
       departmentsIds,
+      benefitsIds,
     });
 
     if (result.isLeft()) {

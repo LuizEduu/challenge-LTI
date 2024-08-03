@@ -10,12 +10,14 @@ import { UserRole } from '@prisma/client';
 import { UsersDepartmentsRepository } from '@/domain/RH/application/repositories/users-departments-repository';
 import { UserDepartments } from '@/domain/RH/enterprise/entities/user-departments';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { UsersBenefitsRepository } from '@/domain/RH/application/repositories/users-benefits-repository';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
   constructor(
     private prisma: PrismaService,
     private usersDepartmentsRepository: UsersDepartmentsRepository,
+    private usersBenefitsRepository: UsersBenefitsRepository
   ) {}
 
   async create(user: User): Promise<void> {

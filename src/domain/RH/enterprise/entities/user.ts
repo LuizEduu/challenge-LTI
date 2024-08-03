@@ -2,6 +2,7 @@ import { Optional } from '@/core/types/optional';
 import { Entity } from 'src/core/entities/entity';
 import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
 import { UserDepartments } from './user-departments';
+import { UserBenefits } from './user-benefits';
 
 export enum Role {
   employee = 'employee',
@@ -17,6 +18,8 @@ export type UserProps = {
   updatedAt?: Date | null;
   departmentsIds: string[];
   userDepartments: UserDepartments[];
+  benefitsIds: string[];
+  userBenefits: UserBenefits[];
 };
 
 export class User extends Entity<UserProps> {
@@ -76,10 +79,27 @@ export class User extends Entity<UserProps> {
     return this.props.userDepartments;
   }
 
+  get benefitsIds() {
+    return this.props.benefitsIds;
+  }
+
+  set benefitsIds(benefitsIds: string[]) {
+    this.props.benefitsIds = benefitsIds;
+  }
+
+  get userBenefits() {
+    return this.props.userBenefits;
+  }
+
   static create(
     props: Optional<
       UserProps,
-      'createdAt' | 'updatedAt' | 'departmentsIds' | 'userDepartments'
+      | 'createdAt'
+      | 'updatedAt'
+      | 'departmentsIds'
+      | 'userDepartments'
+      | 'benefitsIds'
+      | 'userBenefits'
     >,
     id?: UniqueEntityID,
   ) {
@@ -89,6 +109,8 @@ export class User extends Entity<UserProps> {
         role: props.role ?? Role.employee,
         departmentsIds: props.departmentsIds ?? [],
         userDepartments: props.userDepartments ?? [],
+        benefitsIds: props.benefitsIds ?? [],
+        userBenefits: props.userBenefits ?? [],
       },
       id,
     );

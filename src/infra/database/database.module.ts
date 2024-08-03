@@ -23,6 +23,11 @@ import { PrismaUsersDepartmentsRepository } from './prisma/repositories/prisma-u
       useClass: PrismaUsersDepartmentsRepository,
     },
   ],
-  exports: [PrismaService, UsersRepository, DepartmentsRepository],
+  exports: [
+    PrismaService,
+    UsersRepository,
+    DepartmentsRepository,
+    UsersDepartmentsRepository,
+  ],
 })
 export class DatabaseModule {}

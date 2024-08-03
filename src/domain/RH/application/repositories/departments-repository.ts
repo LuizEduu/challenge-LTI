@@ -13,4 +13,5 @@ export abstract class DepartmentsRepository {
   abstract fetchByParams(params: fetchByParamsRequest): Promise<Department[]>;
   abstract findById(id: string): Promise<Department | null>;
   abstract update(department: Department): Promise<void>;
+  abstract delete(id: string): Promise<void>;
 }

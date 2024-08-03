@@ -17,4 +17,14 @@ export class PrismaUsersDepartmentsRepository
       data,
     });
   }
+
+  async findByDepartmentId(departmentId: string): Promise<UserDepartments[]> {
+    const userDepartments = await this.prisma.userDepartment.findMany({
+      where: {
+        departmentId,
+      },
+    });
+
+    return userDepartments.map(PrismaUsersDepartmentsMapper.toDomain);
+  }
 }

@@ -70,12 +70,18 @@ export class PrismaDepartmentsRepository implements DepartmentsRepository {
   async update(department: Department): Promise<void> {
     const data = PrismaDepartmentMapper.toPrisma(department);
 
-    console.log(data);
-
     await this.prisma.department.update({
       data,
       where: {
         id: department.id.toString(),
+      },
+    });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.department.delete({
+      where: {
+        id,
       },
     });
   }

@@ -14,4 +14,5 @@ export abstract class UsersRepository {
   abstract fetchByParams(params: findByParamsRequest): Promise<User[]>;
   abstract findById(id: string): Promise<User | null>;
   abstract delete(id: string): Promise<void>;
+  abstract update(user: User): Promise<void>;
 }

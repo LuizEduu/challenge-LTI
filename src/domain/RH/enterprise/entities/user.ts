@@ -29,32 +29,36 @@ export class User extends Entity<UserProps> {
     return this.props.email;
   }
 
-  set email(name: string) {
-    this.props.name = name;
+  set email(email: string) {
+    this.props.email = email;
   }
 
   get password() {
     return this.props.password;
   }
 
-  set password(name: string) {
-    this.props.name = name;
+  set password(password: string) {
+    this.props.password = password;
   }
 
   get role() {
     return this.props.role;
   }
 
-  set role(name: string) {
-    this.props.name = name;
+  set role(role: string) {
+    this.props.role = role;
   }
 
   get createdAt() {
     return this.props.createdAt;
   }
 
-  get updatedAt() {
+  get updatedAt(): Date | null | undefined {
     return this.props.updatedAt;
+  }
+
+  set updatedAt(updatedAt: Date) {
+    this.props.updatedAt = updatedAt;
   }
 
   static create(

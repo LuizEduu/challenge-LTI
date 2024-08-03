@@ -9,6 +9,8 @@ import { FindAccountController } from './controllers/find-account.controller';
 import { FindUserUseCase } from '@/domain/RH/application/use-cases/find-user';
 import { DeleteAccountController } from './controllers/delete-account.controller';
 import { DeleteUserUseCase } from '@/domain/RH/application/use-cases/delete-user';
+import { UpdateAccountController } from './controllers/update-account.controller';
+import { UpdateUserUseCase } from '@/domain/RH/application/use-cases/update-user';
 
 @Module({
   controllers: [
@@ -16,12 +18,14 @@ import { DeleteUserUseCase } from '@/domain/RH/application/use-cases/delete-user
     FetchAccountsController,
     FindAccountController,
     DeleteAccountController,
+    UpdateAccountController,
   ],
   providers: [
     CreateUserUseCase,
     FetchUsersUseCase,
     FindUserUseCase,
     DeleteUserUseCase,
+    UpdateUserUseCase,
   ],
   imports: [DatabaseModule, CryptographyModule],
 })

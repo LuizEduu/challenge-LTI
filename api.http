@@ -40,3 +40,15 @@ Content-Type:  application/json
     "managerId": "049459bf-2c99-45f5-9f57-ffc212577bc1"
 }
 ###
+GET http://localhost:3000/departments?managerId=049459bf-2c99-45f5-9f57-ffc212577bc1
+###
+
+PUT http://localhost:3000/departments/44cad2cc-c519-4fef-9c68-54565efd758e
+Content-Type: application/json
+
+{
+    "name": "Telemarketing",
+    "userId": "5d1ccd73-85d3-457c-8a31-6cd3e2bfdd15"
+    
+}
+###

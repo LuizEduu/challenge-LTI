@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import {
-  findByParamsRequest,
+  fetchByParamsRequest,
   UsersRepository,
 } from '@/domain/RH/application/repositories/users-repository';
 import { User } from '@/domain/RH/enterprise/entities/user';
@@ -40,7 +40,7 @@ export class PrismaUsersRepository implements UsersRepository {
     name,
     role,
     createdAt,
-  }: findByParamsRequest): Promise<User[]> {
+  }: fetchByParamsRequest): Promise<User[]> {
     const users = await this.prisma.user.findMany({
       where: {
         id: id,

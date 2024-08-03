@@ -1,6 +1,6 @@
 import { User } from '../../enterprise/entities/user';
 
-export type findByParamsRequest = {
+export type fetchByParamsRequest = {
   id?: string;
   name?: string;
   email?: string;
@@ -11,7 +11,7 @@ export type findByParamsRequest = {
 export abstract class UsersRepository {
   abstract findByEmail(email: string): Promise<User | null>;
   abstract create(user: User): Promise<void>;
-  abstract fetchByParams(params: findByParamsRequest): Promise<User[]>;
+  abstract fetchByParams(params: fetchByParamsRequest): Promise<User[]>;
   abstract findById(id: string): Promise<User | null>;
   abstract delete(id: string): Promise<void>;
   abstract update(user: User): Promise<void>;

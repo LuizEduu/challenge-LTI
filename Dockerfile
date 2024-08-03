@@ -1,6 +1,5 @@
 FROM node:20
 
-# Switch to root to set permissions
 USER root
 
 WORKDIR /home/node/app
@@ -26,5 +25,4 @@ COPY --chown=node:node . .
 
 EXPOSE 3000
 
-# Default command (could be changed based on your needs)
 CMD [ "tail", "-f", "/dev/null" ]

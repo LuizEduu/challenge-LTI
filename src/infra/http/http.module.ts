@@ -7,14 +7,22 @@ import { FetchAccountsController } from './controllers/fetch-accounts.controller
 import { FetchUsersUseCase } from '@/domain/RH/application/use-cases/fetch-users';
 import { FindAccountController } from './controllers/find-account.controller';
 import { FindUserUseCase } from '@/domain/RH/application/use-cases/find-user';
+import { DeleteAccountController } from './controllers/delete-account.controller';
+import { DeleteUserUseCase } from '@/domain/RH/application/use-cases/delete-user';
 
 @Module({
   controllers: [
     CreateAccountController,
     FetchAccountsController,
     FindAccountController,
+    DeleteAccountController,
   ],
-  providers: [CreateUserUseCase, FetchUsersUseCase, FindUserUseCase],
+  providers: [
+    CreateUserUseCase,
+    FetchUsersUseCase,
+    FindUserUseCase,
+    DeleteUserUseCase,
+  ],
   imports: [DatabaseModule, CryptographyModule],
 })
 export class HttpModule {}

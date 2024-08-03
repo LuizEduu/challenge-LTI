@@ -2,7 +2,9 @@ import { BenefitsRepository } from '@/domain/RH/application/repositories/benefit
 import { Benefit } from '@/domain/RH/enterprise/entities/benefit';
 import { PrismaService } from '../prisma.service';
 import { PrismaBenefitMapper } from '../mappers/prisma-benefit-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaBenefitsRepository implements BenefitsRepository {
   constructor(private prisma: PrismaService) {}
 

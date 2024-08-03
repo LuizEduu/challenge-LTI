@@ -57,3 +57,12 @@ Content-Type: application/json
 DELETE http://localhost:3000/departments/44cad2cc-c519-4fef-9c68-54565efd758e
 Content-Type: application/json
 ###
+
+POST http://localhost:3000/benefits
+Content-Type:  application/json
+
+{
+    "name": "Vale alimentação",
+    "description": "Cartão de 2000 reais para feira(sonho)"
+}
+###

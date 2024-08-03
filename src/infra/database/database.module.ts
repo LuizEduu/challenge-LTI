@@ -6,6 +6,8 @@ import { DepartmentsRepository } from '@/domain/RH/application/repositories/depa
 import { PrismaDepartmentsRepository } from './prisma/repositories/prisma-departments-repository';
 import { UsersDepartmentsRepository } from '@/domain/RH/application/repositories/users-departments-repository';
 import { PrismaUsersDepartmentsRepository } from './prisma/repositories/prisma-users-departments-repository';
+import { BenefitsRepository } from '@/domain/RH/application/repositories/benefits-repository';
+import { PrismaBenefitsRepository } from './prisma/repositories/prisma-benefits-repository';
 
 @Module({
   providers: [
@@ -22,12 +24,17 @@ import { PrismaUsersDepartmentsRepository } from './prisma/repositories/prisma-u
       provide: UsersDepartmentsRepository,
       useClass: PrismaUsersDepartmentsRepository,
     },
+    {
+      provide: BenefitsRepository,
+      useClass: PrismaBenefitsRepository,
+    },
   ],
   exports: [
     PrismaService,
     UsersRepository,
     DepartmentsRepository,
     UsersDepartmentsRepository,
+    BenefitsRepository,
   ],
 })
 export class DatabaseModule {}

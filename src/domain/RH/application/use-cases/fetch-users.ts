@@ -37,8 +37,6 @@ export class FetchUsersUseCase {
       createdAt: createdAt ? new Date(createdAt) : undefined,
     });
 
-    console.log(users);
-
     return right({
       users,
     });

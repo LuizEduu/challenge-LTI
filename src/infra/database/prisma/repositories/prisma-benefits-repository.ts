@@ -54,4 +54,29 @@ export class PrismaBenefitsRepository implements BenefitsRepository {
 
     return benefits.map(PrismaBenefitMapper.toDomain);
   }
+
+  async findById(id: string): Promise<Benefit | null> {
+    const benefit = await this.prisma.benefit.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!benefit) {
+      return null;
+    }
+
+    return PrismaBenefitMapper.toDomain(benefit);
+  }
+
+  async update(benefit: Benefit): Promise<void> {
+    const data = PrismaBenefitMapper.toPrisma(benefit);
+
+    await this.prisma.benefit.update({
+      data,
+      where: {
+        id: benefit.id.toString(),
+      },
+    });
+  }
 }

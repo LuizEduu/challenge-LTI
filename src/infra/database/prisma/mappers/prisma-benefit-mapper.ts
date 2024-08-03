@@ -21,6 +21,7 @@ export class PrismaBenefitMapper {
       name: benefit.name,
       description: benefit.description,
       createdAt: benefit.createdAt,
+      updatedAt: benefit.updatedAt ?? undefined,
     };
   }
 }

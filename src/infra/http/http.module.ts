@@ -11,6 +11,8 @@ import { DeleteAccountController } from './controllers/delete-account.controller
 import { DeleteUserUseCase } from '@/domain/RH/application/use-cases/delete-user';
 import { UpdateAccountController } from './controllers/update-account.controller';
 import { UpdateUserUseCase } from '@/domain/RH/application/use-cases/update-user';
+import { CreateDeparmentController } from './controllers/create-department.controller';
+import { CreateDepartmentUseCase } from '@/domain/RH/application/use-cases/create-department';
 
 @Module({
   controllers: [
@@ -19,6 +21,7 @@ import { UpdateUserUseCase } from '@/domain/RH/application/use-cases/update-user
     FindAccountController,
     DeleteAccountController,
     UpdateAccountController,
+    CreateDeparmentController,
   ],
   providers: [
     CreateUserUseCase,
@@ -26,6 +29,7 @@ import { UpdateUserUseCase } from '@/domain/RH/application/use-cases/update-user
     FindUserUseCase,
     DeleteUserUseCase,
     UpdateUserUseCase,
+    CreateDepartmentUseCase,
   ],
   imports: [DatabaseModule, CryptographyModule],
 })

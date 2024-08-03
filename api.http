@@ -31,3 +31,12 @@ Content-Type: application/json
     "role": "emplooye"
 }
 ###
+
+POST http://localhost:3000/departments
+Content-Type:  application/json
+
+{
+    "name": "Vendas",
+    "managerId": "049459bf-2c99-45f5-9f57-ffc212577bc1"
+}
+###

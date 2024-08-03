@@ -1,4 +1,6 @@
 import { Entity } from '@/core/entities/entity';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Optional } from '@/core/types/optional';
 
 type BenefitProps = {
   name: string;
@@ -30,5 +32,12 @@ export class Benefit extends Entity<BenefitProps> {
 
   get updatedAt() {
     return this.props.updatedAt;
+  }
+
+  static create(
+    props: Optional<BenefitProps, 'createdAt'>,
+    id?: UniqueEntityID,
+  ) {
+    return new Benefit(props, id);
   }
 }

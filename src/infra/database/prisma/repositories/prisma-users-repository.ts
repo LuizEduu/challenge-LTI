@@ -7,10 +7,16 @@ import {
 import { User } from '@/domain/RH/enterprise/entities/user';
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper';
 import { UserRole } from '@prisma/client';
+import { UsersDepartmentsRepository } from '@/domain/RH/application/repositories/users-departments-repository';
+import { UserDepartments } from '@/domain/RH/enterprise/entities/user-departments';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private usersDepartmentsRepository: UsersDepartmentsRepository,
+  ) {}
 
   async create(user: User): Promise<void> {
     const data = PrismaUserMapper.toPrisma(user);
@@ -18,6 +24,15 @@ export class PrismaUsersRepository implements UsersRepository {
     await this.prisma.user.create({
       data,
     });
+
+    const userDepartments = user.departmentsIds.map((id) => {
+      return UserDepartments.create({
+        userId: user.id,
+        departmentId: new UniqueEntityID(id),
+      });
+    });
+
+    await this.usersDepartmentsRepository.create(userDepartments);
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -51,9 +66,12 @@ export class PrismaUsersRepository implements UsersRepository {
           gte: createdAt, // Maior ou igual a createdAt
         },
       },
+      include: {
+        UserDepartment: true,
+      },
     });
 
-    return users.map(PrismaUserMapper.toDomain);
+    return users.map(PrismaUserMapper.toDomainWIthDeparments);
   }
 
   async findById(id: string): Promise<User | null> {

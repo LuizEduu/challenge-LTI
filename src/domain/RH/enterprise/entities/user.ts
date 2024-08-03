@@ -1,6 +1,7 @@
 import { Optional } from '@/core/types/optional';
 import { Entity } from 'src/core/entities/entity';
 import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
+import { UserDepartments } from './user-departments';
 
 export enum Role {
   employee = 'employee',
@@ -14,6 +15,8 @@ export type UserProps = {
   role: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
+  departmentsIds: string[];
+  userDepartments: UserDepartments[];
 };
 
 export class User extends Entity<UserProps> {
@@ -61,14 +64,31 @@ export class User extends Entity<UserProps> {
     this.props.updatedAt = updatedAt;
   }
 
+  get departmentsIds() {
+    return this.props.departmentsIds;
+  }
+
+  set departmentsIds(departmentsIds: string[]) {
+    this.props.departmentsIds = departmentsIds;
+  }
+
+  get userDepartments() {
+    return this.props.userDepartments;
+  }
+
   static create(
-    props: Optional<UserProps, 'createdAt' | 'updatedAt'>,
+    props: Optional<
+      UserProps,
+      'createdAt' | 'updatedAt' | 'departmentsIds' | 'userDepartments'
+    >,
     id?: UniqueEntityID,
   ) {
     return new User(
       {
         ...props,
         role: props.role ?? Role.employee,
+        departmentsIds: props.departmentsIds ?? [],
+        userDepartments: props.userDepartments ?? [],
       },
       id,
     );

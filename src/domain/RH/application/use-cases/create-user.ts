@@ -10,6 +10,7 @@ type CreateUserUseCaseRequest = {
   email: string;
   password: string;
   role: string;
+  departmentsIds?: string[];
 };
 
 type CreateUserUseCaseResponse = Either<
@@ -31,6 +32,7 @@ export class CreateUserUseCase {
     email,
     password,
     role,
+    departmentsIds,
   }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
     const userWithSameEmail = await this.usersRepository.findByEmail(email);
 
@@ -45,6 +47,7 @@ export class CreateUserUseCase {
       email,
       password: hashedPassword,
       role,
+      departmentsIds,
     });
 
     await this.usersRepository.create(user);

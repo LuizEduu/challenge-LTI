@@ -4,6 +4,8 @@ import { UsersRepository } from '@/domain/RH/application/repositories/users-repo
 import { PrismaUsersRepository } from './prisma/repositories/prisma-users-repository';
 import { DepartmentsRepository } from '@/domain/RH/application/repositories/departments-repository';
 import { PrismaDepartmentsRepository } from './prisma/repositories/prisma-departments-repository';
+import { UsersDepartmentsRepository } from '@/domain/RH/application/repositories/users-departments-repository';
+import { PrismaUsersDepartmentsRepository } from './prisma/repositories/prisma-users-departments-repository';
 
 @Module({
   providers: [
@@ -15,6 +17,10 @@ import { PrismaDepartmentsRepository } from './prisma/repositories/prisma-depart
     {
       provide: DepartmentsRepository,
       useClass: PrismaDepartmentsRepository,
+    },
+    {
+      provide: UsersDepartmentsRepository,
+      useClass: PrismaUsersDepartmentsRepository,
     },
   ],
   exports: [PrismaService, UsersRepository, DepartmentsRepository],

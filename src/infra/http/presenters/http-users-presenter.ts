@@ -9,6 +9,10 @@ export class HttpUserPresenter {
       role: user.role,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
+      departments: user.userDepartments.map((department) => ({
+        departmentId: department.id.toString(),
+        createdAt: department.createdAt,
+      })),
     };
   }
 }

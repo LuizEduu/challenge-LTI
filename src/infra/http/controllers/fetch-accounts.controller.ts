@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Query,
-  UsePipes,
-} from '@nestjs/common';
+import { Controller, Get, Query, UsePipes } from '@nestjs/common';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { HttpUserPresenter } from '../presenters/http-users-presenter';
@@ -27,7 +20,6 @@ export class FetchAccountsController {
 
   @UsePipes(new ZodValidationPipe(fetchAccountsQuerySchema))
   @Get()
-  @HttpCode(HttpStatus.CREATED)
   async handle(
     @Query() { id, email, name, role, createdAt }: FetchAccountsQuerySchema,
   ) {

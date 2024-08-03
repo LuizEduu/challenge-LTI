@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { UsersRepository } from '@/domain/RH/application/repositories/users-repository';
+import {
+  findByParamsRequest,
+  UsersRepository,
+} from '@/domain/RH/application/repositories/users-repository';
 import { User } from '@/domain/RH/enterprise/entities/user';
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper';
+import { UserRole } from '@prisma/client';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
@@ -28,5 +32,27 @@ export class PrismaUsersRepository implements UsersRepository {
     }
 
     return PrismaUserMapper.toDomain(user);
+  }
+
+  async fetchByParams({
+    id,
+    email,
+    name,
+    role,
+    createdAt,
+  }: findByParamsRequest): Promise<User[]> {
+    const users = await this.prisma.user.findMany({
+      where: {
+        id: id,
+        email,
+        name,
+        role: role as UserRole,
+        createdAt: {
+          gte: createdAt, // Maior ou igual a createdAt
+        },
+      },
+    });
+
+    return users.map(PrismaUserMapper.toDomain);
   }
 }

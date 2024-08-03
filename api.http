@@ -62,7 +62,8 @@ POST http://localhost:3000/benefits
 Content-Type:  application/json
 
 {
-    "name": "Vale alimentação",
-    "description": "Cartão de 2000 reais para feira(sonho)"
+    "name": "Plano de saúde",
+    "description": "Plano de saúde que atende no pais inteiro sem cooparticipação(sonho)"
 }
 ###
+GET http://localhost:3000/benefits?description=plano

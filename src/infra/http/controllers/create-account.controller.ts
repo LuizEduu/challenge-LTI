@@ -12,6 +12,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { CreateUserUseCase } from '@/domain/RH/application/use-cases/create-user';
 import { UserAlreadyExistsError } from '@/domain/RH/application/use-cases/errors/user-already-exists';
+import { HttpUserPresenter } from '../presenters/http-users-presenter';
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -50,7 +51,7 @@ export class CreateAccountController {
     }
 
     return {
-      user: result.value.user,
+      user: HttpUserPresenter.toHTTP(result.value.user),
     };
   }
 }

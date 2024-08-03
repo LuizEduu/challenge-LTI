@@ -11,7 +11,7 @@ export type UserProps = {
   name: string;
   email: string;
   password: string;
-  role: Role;
+  role: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
 };

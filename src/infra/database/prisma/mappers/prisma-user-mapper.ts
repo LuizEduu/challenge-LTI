@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { Role, User } from '@/domain/RH/enterprise/entities/user';
+import { User } from '@/domain/RH/enterprise/entities/user';
 import { Prisma, User as PrismaUser, UserRole } from '@prisma/client';
 
 export class PrismaUserMapper {
@@ -9,7 +9,7 @@ export class PrismaUserMapper {
         name: raw.name,
         email: raw.email,
         password: raw.password,
-        role: this.convertToUserDomainRole(raw.role),
+        role: raw.role.toString(),
       },
       new UniqueEntityID(raw.id),
     );
@@ -25,19 +25,9 @@ export class PrismaUserMapper {
     };
   }
 
-  static convertToPrismaRole(roleString: string): UserRole {
+  static convertToPrismaRole(roleString: string) {
     if (Object.values(UserRole).includes(roleString as UserRole)) {
       return roleString as UserRole;
-    } else {
-      throw new Error(`Invalid role: ${roleString}`);
-    }
-  }
-
-  static convertToUserDomainRole(prismaRole: UserRole): Role {
-    if (Object.values(Role).includes(prismaRole.toString() as Role)) {
-      return prismaRole as Role;
-    } else {
-      throw new Error(`Invalid role: ${prismaRole}`);
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Role, User } from '../../enterprise/entities/user';
+import { User } from '../../enterprise/entities/user';
 import { Either, left, right } from '@/core/either';
 import { UserAlreadyExistsError } from './errors/user-already-exists';
 import { UsersRepository } from '../repositories/users-repository';
@@ -44,7 +44,7 @@ export class CreateUserUseCase {
       name,
       email,
       password: hashedPassword,
-      role: Role[],
+      role,
     });
 
     await this.usersRepository.create(user);

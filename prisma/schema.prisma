@@ -27,6 +27,7 @@ model User {
   createdAt      DateTime         @default(now()) @map("created_at")
   updatedAt      DateTime         @updatedAt @map("updated_at")
   UserDepartment UserDepartment[]
+  UserBenefits   UserBenefits[]
 
   @@map("users")
 }
@@ -53,4 +54,21 @@ model UserDepartment {
   department Department @relation(fields: [departmentId], references: [id])
 
   @@map("users_departments")
+}
+
+model Benefit {
+  id           String         @id @default(uuid())
+  name         String         @unique
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  UserBenefits UserBenefits[]
+}
+
+model UserBenefits {
+  id        String @id @default(uuid())
+  benefitId String @map("benefit_id")
+  userId    String @map("user_id")
+
+  benefit Benefit @relation(fields: [benefitId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
 }

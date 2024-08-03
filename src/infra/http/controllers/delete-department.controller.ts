@@ -9,7 +9,7 @@ import {
   UnauthorizedException,
   UsePipes,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { DeleteDepartmentUseCase } from '@/domain/RH/application/use-cases/delete-department';
 import { DepartmentNotFoundError } from '@/domain/RH/application/use-cases/errors/department-not-found';

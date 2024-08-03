@@ -8,7 +8,7 @@ import {
   Param,
   UsePipes,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { UserNotFoundError } from '@/domain/RH/application/use-cases/errors/user-not-found-error';
 import { DeleteUserUseCase } from '@/domain/RH/application/use-cases/delete-user';

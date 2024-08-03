@@ -8,11 +8,11 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { CreateUserUseCase } from '@/domain/RH/application/use-cases/create-user';
 import { UserAlreadyExistsError } from '@/domain/RH/application/use-cases/errors/user-already-exists';
 import { HttpUserPresenter } from '../presenters/http-users-presenter';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 
 const createAccountBodySchema = z.object({
   name: z.string(),

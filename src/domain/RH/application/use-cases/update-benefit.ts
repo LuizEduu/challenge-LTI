@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Either, left, right } from '@/core/either';
-import { NotAuthorizedError } from './errors/not-authorized-error';
 import { BenefitNotFoundError } from './errors/benefit-not-found-error';
 import { Benefit } from '../../enterprise/entities/benefit';
 import { BenefitsRepository } from '../repositories/benefits-repository';
@@ -9,11 +8,10 @@ type UpdateBenefitUseCaseRequest = {
   id: string;
   name?: string;
   description?: string;
-  userId: string;
 };
 
 type UpdateBenefitUseCaseResponse = Either<
-  BenefitNotFoundError | NotAuthorizedError,
+  BenefitNotFoundError,
   {
     benefit: Benefit;
   }

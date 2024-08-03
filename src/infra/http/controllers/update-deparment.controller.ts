@@ -8,12 +8,12 @@ import {
   UnauthorizedException,
   UsePipes,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { UpdateDepartmentUseCase } from '@/domain/RH/application/use-cases/update-department';
 import { DepartmentNotFoundError } from '@/domain/RH/application/use-cases/errors/department-not-found';
 import { NotAuthorizedError } from '@/domain/RH/application/use-cases/errors/not-authorized-error';
 import { HttpDepartmentsPresenter } from '../presenters/http-departments-presenter';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 
 const updateDepartmentBodySchema = z.object({
   name: z.string().optional(),

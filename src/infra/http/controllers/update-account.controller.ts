@@ -7,7 +7,7 @@ import {
   Put,
   UsePipes,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { UpdateUserUseCase } from '@/domain/RH/application/use-cases/update-user';
 import { UserAlreadyExistsError } from '@/domain/RH/application/use-cases/errors/user-already-exists';

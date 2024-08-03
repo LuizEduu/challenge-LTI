@@ -6,7 +6,7 @@ import {
   Param,
   UsePipes,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { HttpUserPresenter } from '../presenters/http-users-presenter';
 import { FindUserUseCase } from '@/domain/RH/application/use-cases/find-user';

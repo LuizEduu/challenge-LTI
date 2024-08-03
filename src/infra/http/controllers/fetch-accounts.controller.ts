@@ -1,5 +1,5 @@
 import { Controller, Get, Query, UsePipes } from '@nestjs/common';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { HttpUserPresenter } from '../presenters/http-users-presenter';
 import { FetchUsersUseCase } from '@/domain/RH/application/use-cases/fetch-users';

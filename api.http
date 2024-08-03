@@ -67,3 +67,14 @@ Content-Type:  application/json
 }
 ###
 GET http://localhost:3000/benefits?description=plano
+###
+
+PUT http://localhost:3000/benefits/bcc12ebf-a65f-44bd-ae14-cceabb680e2c
+Content-Type: application/json
+
+{
+    "name": "Plano de saúde master",
+    "description": "descrição atualizada"
+    
+}
+###

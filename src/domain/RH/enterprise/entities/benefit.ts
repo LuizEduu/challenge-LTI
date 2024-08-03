@@ -30,8 +30,12 @@ export class Benefit extends Entity<BenefitProps> {
     return this.props.createdAt;
   }
 
-  get updatedAt() {
+  get updatedAt(): Date | null | undefined {
     return this.props.updatedAt;
+  }
+
+  set updatedAt(updatedAt: Date) {
+    this.props.updatedAt = updatedAt;
   }
 
   static create(

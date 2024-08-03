@@ -11,13 +11,14 @@ import { UsersDepartmentsRepository } from '@/domain/RH/application/repositories
 import { UserDepartments } from '@/domain/RH/enterprise/entities/user-departments';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { UsersBenefitsRepository } from '@/domain/RH/application/repositories/users-benefits-repository';
+import { UserBenefits } from '@/domain/RH/enterprise/entities/user-benefits';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
   constructor(
     private prisma: PrismaService,
     private usersDepartmentsRepository: UsersDepartmentsRepository,
-    private usersBenefitsRepository: UsersBenefitsRepository
+    private usersBenefitsRepository: UsersBenefitsRepository,
   ) {}
 
   async create(user: User): Promise<void> {
@@ -35,6 +36,15 @@ export class PrismaUsersRepository implements UsersRepository {
     });
 
     await this.usersDepartmentsRepository.create(userDepartments);
+
+    const userBenefits = user.benefitsIds.map((id) => {
+      return UserBenefits.create({
+        userId: user.id,
+        benefitId: new UniqueEntityID(id),
+      });
+    });
+
+    await this.usersBenefitsRepository.create(userBenefits);
   }
 
   async findByEmail(email: string): Promise<User | null> {

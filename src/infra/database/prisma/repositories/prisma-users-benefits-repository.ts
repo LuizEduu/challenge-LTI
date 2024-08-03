@@ -16,4 +16,12 @@ export class PrismaUsersBenefitsRepository implements UsersBenefitsRepository {
 
     return benefits.map(PrismaUserBenefitMapper.toDomain);
   }
+
+  async create(userBenefits: UserBenefits[]): Promise<void> {
+    const data = userBenefits.map(PrismaUserBenefitMapper.toPrisma);
+
+    await this.prisma.userBenefits.createMany({
+      data,
+    });
+  }
 }

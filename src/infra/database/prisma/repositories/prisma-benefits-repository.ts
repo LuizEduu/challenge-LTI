@@ -1,4 +1,7 @@
-import { BenefitsRepository } from '@/domain/RH/application/repositories/benefits-repository';
+import {
+  BenefitsRepository,
+  fetchByParamsRequest,
+} from '@/domain/RH/application/repositories/benefits-repository';
 import { Benefit } from '@/domain/RH/enterprise/entities/benefit';
 import { PrismaService } from '../prisma.service';
 import { PrismaBenefitMapper } from '../mappers/prisma-benefit-mapper';
@@ -28,5 +31,27 @@ export class PrismaBenefitsRepository implements BenefitsRepository {
     }
 
     return PrismaBenefitMapper.toDomain(benefit);
+  }
+
+  async fetchByParams({
+    id,
+    name,
+    description,
+    createdAt,
+  }: fetchByParamsRequest): Promise<Benefit[]> {
+    const benefits = await this.prisma.benefit.findMany({
+      where: {
+        id,
+        name,
+        description: {
+          contains: description,
+        },
+        createdAt: {
+          gte: createdAt,
+        },
+      },
+    });
+
+    return benefits.map(PrismaBenefitMapper.toDomain);
   }
 }

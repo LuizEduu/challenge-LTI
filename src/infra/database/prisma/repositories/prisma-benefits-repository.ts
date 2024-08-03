@@ -79,4 +79,12 @@ export class PrismaBenefitsRepository implements BenefitsRepository {
       },
     });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.benefit.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

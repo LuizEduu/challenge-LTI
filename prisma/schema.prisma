@@ -63,6 +63,8 @@ model Benefit {
   createdAt    DateTime       @default(now()) @map("created_at")
   updatedAt    DateTime       @updatedAt @map("updated_at")
   UserBenefits UserBenefits[]
+
+  @@map("benefits")
 }
 
 model UserBenefits {
@@ -72,4 +74,6 @@ model UserBenefits {
 
   benefit Benefit @relation(fields: [benefitId], references: [id])
   user    User    @relation(fields: [userId], references: [id])
+
+  @@map("user_benefits")
 }

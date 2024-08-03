@@ -13,4 +13,5 @@ export abstract class BenefitsRepository {
   abstract fetchByParams(params: fetchByParamsRequest): Promise<Benefit[]>;
   abstract findById(id: string): Promise<Benefit | null>;
   abstract update(benefit: Benefit): Promise<void>;
+  abstract delete(id: string): Promise<void>;
 }

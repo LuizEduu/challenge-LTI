@@ -71,6 +71,7 @@ export class CreatePayrollUseCase {
       totalPayment,
       emplooyeId: new UniqueEntityID(employeeId),
       departmentId: new UniqueEntityID(departmentId),
+      benefitsIds: userBenefits.map((benefit) => benefit.benefitId),
     });
 
     await this.payrollRepository.create(payroll);

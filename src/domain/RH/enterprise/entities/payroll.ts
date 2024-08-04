@@ -13,6 +13,7 @@ export type PayrollProps = {
   emplooyeId: UniqueEntityID;
   createdAt?: Date | undefined;
   updatedAt?: Date | undefined;
+  benefitsIds?: string[];
 };
 
 export class Payroll extends Entity<PayrollProps> {
@@ -92,6 +93,14 @@ export class Payroll extends Entity<PayrollProps> {
     this.props.updatedAt = updatedAt;
   }
 
+  get benefitsIds(): string[] | null | undefined {
+    return this.props.benefitsIds;
+  }
+
+  set benefitsIds(benefitsIds: string[]) {
+    this.props.benefitsIds = benefitsIds;
+  }
+
   static create(
     props: Optional<PayrollProps, 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityID,
@@ -99,6 +108,7 @@ export class Payroll extends Entity<PayrollProps> {
     return new Payroll(
       {
         ...props,
+        benefitsIds: props.benefitsIds ?? [],
       },
       id,
     );

@@ -28,6 +28,7 @@ model User {
   updatedAt      DateTime         @updatedAt @map("updated_at")
   UserDepartment UserDepartment[]
   UserBenefits   UserBenefits[]
+  Payroll        Payroll[]
 
   @@map("users")
 }
@@ -40,6 +41,7 @@ model Department {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   UserDepartment UserDepartment[]
+  Payroll        Payroll[]
 
   @@map("departments")
 }
@@ -62,6 +64,7 @@ model Benefit {
   description  String
   createdAt    DateTime       @default(now()) @map("created_at")
   updatedAt    DateTime       @updatedAt @map("updated_at")
+  value        Float          @default(0)
   UserBenefits UserBenefits[]
 
   @@map("benefits")
@@ -76,4 +79,21 @@ model UserBenefits {
   user    User    @relation(fields: [userId], references: [id])
 
   @@map("user_benefits")
+}
+
+model Payroll {
+  id           String   @id @default(uuid())
+  name         String
+  firstPeriod  DateTime @map("first_period")
+  lastPeriod   DateTime @map("last_period")
+  month        Int
+  year         Int
+  totalPayment Float    @map("total_payment")
+  departmentId String   @map("department_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt
+  emplooyeId   String
+
+  user       User       @relation(fields: [emplooyeId], references: [id])
+  department Department @relation(fields: [departmentId], references: [id])
 }

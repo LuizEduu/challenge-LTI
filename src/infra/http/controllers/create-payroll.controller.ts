@@ -16,8 +16,8 @@ import { HttpPayrollPresenter } from '../presenters/http-payroll-presenter';
 
 const createPayrollBodySchema = z.object({
   name: z.string(),
-  firstPeriod: z.date(),
-  lastPeriod: z.date(),
+  firstPeriod: z.string().transform((value) => new Date(value)),
+  lastPeriod: z.string().transform((value) => new Date(value)),
   month: z.number(),
   year: z.number(),
   departmentId: z.string(),

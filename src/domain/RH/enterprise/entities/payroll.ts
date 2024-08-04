@@ -10,8 +10,9 @@ export type PayrollProps = {
   year: number;
   departmentId: UniqueEntityID;
   totalPayment: number;
-  createdAt?: Date | null;
-  updatedAt?: Date | null;
+  emplooyeId: UniqueEntityID;
+  createdAt?: Date | undefined;
+  updatedAt?: Date | undefined;
 };
 
 export class Payroll extends Entity<PayrollProps> {
@@ -69,6 +70,14 @@ export class Payroll extends Entity<PayrollProps> {
 
   set totalPayment(totalPayment: number) {
     this.props.totalPayment = totalPayment;
+  }
+
+  get emplooyeId() {
+    return this.props.emplooyeId;
+  }
+
+  set emplooyeId(emplooyeId) {
+    this.props.emplooyeId = emplooyeId;
   }
 
   get createdAt() {

@@ -42,7 +42,7 @@ Content-Type:  application/json
     "managerId": "049459bf-2c99-45f5-9f57-ffc212577bc1"
 }
 ###
-GET http://localhost:3000/departments?managerId=049459bf-2c99-45f5-9f57-ffc212577bc1
+GET http://localhost:3000/departments
 ###
 
 PUT http://localhost:3000/departments/44cad2cc-c519-4fef-9c68-54565efd758e
@@ -82,3 +82,20 @@ Content-Type: application/json
 
 DELETE http://localhost:3000/benefits/bcc12ebf-a65f-44bd-ae14-cceabb680e2c
 Content-Type: application/json
+###
+
+POST http://localhost:3000/payroll
+Content-Type: application/json
+
+{
+    "name": "Relatório de pagamento",
+    "firstPeriod": "2024-07-01",
+    "lastPeriod": "2024-08-01",
+    "departmentId": "44cad2cc-c519-4fef-9c68-54565efd758e",
+    "month": 7,
+    "year": 2024,
+    "employeeId": "177a8df4-6291-4cb9-82a9-7e166d9c1cae",
+    "hoursWorked": 168,
+    "hourValue": 20
+}
+###

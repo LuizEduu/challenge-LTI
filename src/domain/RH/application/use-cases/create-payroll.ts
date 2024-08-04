@@ -46,6 +46,7 @@ export class CreatePayrollUseCase {
     const payrollWithPeriodExists = await this.payrollRepository.findByPeriod({
       firstPeriod,
       lastPeriod,
+      userId: employeeId,
     });
     if (payrollWithPeriodExists) {
       return left(new PayrollInPeriodAlreadyExistsError());
@@ -68,7 +69,8 @@ export class CreatePayrollUseCase {
       firstPeriod,
       lastPeriod,
       totalPayment,
-      departmentId: departmentId ? new UniqueEntityID(departmentId) : null,
+      emplooyeId: new UniqueEntityID(employeeId),
+      departmentId: new UniqueEntityID(departmentId),
     });
 
     await this.payrollRepository.create(payroll);

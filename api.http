@@ -11,6 +11,16 @@ Content-Type: application/json
 }
 ###
 
+# @name authenticate
+POST http://localhost:3000/sessions
+Content-Type: application/json
+
+{
+    "email": "luiz022321@test.com",
+    "password": "12345678"
+}
+###
+
 GET http://localhost:3000/users
 Content-Type: application/json
 ###

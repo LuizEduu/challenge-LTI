@@ -11,7 +11,7 @@ import { ConfigService } from '@nestjs/config';
     PassportModule,
     JwtModule.registerAsync({
       global: true,
-      imports: [ConfigService],
+      imports: [],
       inject: [ConfigService],
       useFactory(configService: ConfigService) {
         const privateKey = configService.get('JWT_PRIVATE_KEY');

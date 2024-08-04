@@ -4,14 +4,15 @@ import { UsersBenefitsRepository } from '../repositories/users-benefits-reposito
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { PayrollRepository } from '../repositories/payroll-repository';
 import { PayrollInPeriodAlreadyExistsError } from './errors/payroll-in-period-already-exists-error';
+import { Injectable } from '@nestjs/common';
 
 export type CreatePayrollUseCaseRequest = {
   name: string;
   firstPeriod: Date;
   lastPeriod: Date;
   departmentId: string;
-  month: string;
-  year: string;
+  month: number;
+  year: number;
   hoursWorked: number;
   hourValue: number;
   employeeId: string;
@@ -24,6 +25,7 @@ export type CreatePayrollUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 export class CreatePayrollUseCase {
   constructor(
     private payrollRepository: PayrollRepository,

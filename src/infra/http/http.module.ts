@@ -27,6 +27,8 @@ import { UpdateBenefitController } from './controllers/update-benefit.controller
 import { UpdateBenefitUseCase } from '@/domain/RH/application/use-cases/update-benefit';
 import { DeleteBenefitController } from './controllers/delete-benefit.controller';
 import { DeleteBenefitUseCase } from '@/domain/RH/application/use-cases/delete-benefit';
+import { CreatePayrollController } from './controllers/create-payroll.controller';
+import { CreatePayrollUseCase } from '@/domain/RH/application/use-cases/create-payroll';
 
 @Module({
   controllers: [
@@ -43,6 +45,7 @@ import { DeleteBenefitUseCase } from '@/domain/RH/application/use-cases/delete-b
     FetchBenefitsController,
     UpdateBenefitController,
     DeleteBenefitController,
+    CreatePayrollController,
   ],
   providers: [
     CreateUserUseCase,
@@ -58,6 +61,7 @@ import { DeleteBenefitUseCase } from '@/domain/RH/application/use-cases/delete-b
     FetchBenefitsUseCase,
     UpdateBenefitUseCase,
     DeleteBenefitUseCase,
+    CreatePayrollUseCase,
   ],
   imports: [DatabaseModule, CryptographyModule],
 })

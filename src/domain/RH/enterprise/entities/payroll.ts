@@ -6,9 +6,9 @@ export type PayrollProps = {
   name: string;
   firstPeriod: Date;
   lastPeriod: Date;
-  month: string;
-  year: string;
-  departmentId: UniqueEntityID | null;
+  month: number;
+  year: number;
+  departmentId: UniqueEntityID;
   totalPayment: number;
   createdAt?: Date | null;
   updatedAt?: Date | null;
@@ -39,7 +39,23 @@ export class Payroll extends Entity<PayrollProps> {
     this.props.lastPeriod = lastPeriod;
   }
 
-  get departmentId(): UniqueEntityID | null {
+  get month() {
+    return this.props.month;
+  }
+
+  set month(month: number) {
+    this.props.month = month;
+  }
+
+  get year() {
+    return this.props.year;
+  }
+
+  set year(year: number) {
+    this.props.year = year;
+  }
+
+  get departmentId(): UniqueEntityID {
     return this.props.departmentId;
   }
 
@@ -68,13 +84,12 @@ export class Payroll extends Entity<PayrollProps> {
   }
 
   static create(
-    props: Optional<PayrollProps, 'createdAt' | 'updatedAt' | 'departmentId'>,
+    props: Optional<PayrollProps, 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityID,
   ) {
     return new Payroll(
       {
         ...props,
-        departmentId: props.departmentId ?? null,
       },
       id,
     );

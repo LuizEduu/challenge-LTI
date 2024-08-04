@@ -5,6 +5,7 @@ import { Optional } from '@/core/types/optional';
 type BenefitProps = {
   name: string;
   description: string;
+  value: number | null;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -26,6 +27,14 @@ export class Benefit extends Entity<BenefitProps> {
     this.props.description = description;
   }
 
+  get value(): number | null {
+    return this.props.value;
+  }
+
+  set value(value: number) {
+    this.props.value = value;
+  }
+
   get createdAt() {
     return this.props.createdAt;
   }
@@ -39,9 +48,15 @@ export class Benefit extends Entity<BenefitProps> {
   }
 
   static create(
-    props: Optional<BenefitProps, 'createdAt'>,
+    props: Optional<BenefitProps, 'createdAt' | 'value'>,
     id?: UniqueEntityID,
   ) {
-    return new Benefit(props, id);
+    return new Benefit(
+      {
+        ...props,
+        value: props.value ?? null,
+      },
+      id,
+    );
   }
 }

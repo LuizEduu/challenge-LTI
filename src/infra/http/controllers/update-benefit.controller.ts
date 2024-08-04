@@ -5,7 +5,6 @@ import {
   NotFoundException,
   Param,
   Put,
-  UsePipes,
 } from '@nestjs/common';
 import { z } from 'zod';
 import { UpdateBenefitUseCase } from '@/domain/RH/application/use-cases/update-benefit';
@@ -29,7 +28,6 @@ type UpdateBenefitParamsSchema = z.infer<typeof updateBenefitParamsSchema>;
 export class UpdateBenefitController {
   constructor(private useCase: UpdateBenefitUseCase) {}
 
-  @UsePipes()
   @Put()
   async handle(
     @Body(new ZodValidationPipe(updateBenefitBodySchema))

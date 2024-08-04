@@ -4,11 +4,13 @@ import {
   Controller,
   Post,
   UnauthorizedException,
+  UsePipes,
 } from '@nestjs/common';
 import { z } from 'zod';
 import { Public } from '@/infra/auth/public';
 import { AuthenticateUserUseCase } from '@/domain/RH/application/use-cases/authenticate-user';
 import { WrongCredentialsError } from '@/domain/RH/application/use-cases/errors/wrong-credentials-error';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -21,6 +23,7 @@ type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
 export class SessionsAuthenticateController {
   constructor(private useCase: AuthenticateUserUseCase) {}
 
+  @UsePipes(new ZodValidationPipe(authenticateBodySchema))
   @Post()
   @Public()
   async handle(@Body() body: AuthenticateBodySchema) {

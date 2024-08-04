@@ -6,7 +6,6 @@ import {
   Param,
   Put,
   UnauthorizedException,
-  UsePipes,
 } from '@nestjs/common';
 import { z } from 'zod';
 import { UpdateDepartmentUseCase } from '@/domain/RH/application/use-cases/update-department';
@@ -14,11 +13,12 @@ import { DepartmentNotFoundError } from '@/domain/RH/application/use-cases/error
 import { NotAuthorizedError } from '@/domain/RH/application/use-cases/errors/not-authorized-error';
 import { HttpDepartmentsPresenter } from '../presenters/http-departments-presenter';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { TokenPayload } from '@/infra/auth/jwt-strategy';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
 
 const updateDepartmentBodySchema = z.object({
   name: z.string().optional(),
   managerId: z.string().optional(),
-  userId: z.string(),
 });
 
 const updateDepartmentParamsSchema = z.object({
@@ -34,21 +34,21 @@ type UpdateDepartmentParamsSchema = z.infer<
 export class UpdateDepartmentController {
   constructor(private useCase: UpdateDepartmentUseCase) {}
 
-  @UsePipes()
   @Put()
   async handle(
     @Body(new ZodValidationPipe(updateDepartmentBodySchema))
     body: UpdateDepartmentBodySchema,
     @Param(new ZodValidationPipe(updateDepartmentParamsSchema))
     { id }: UpdateDepartmentParamsSchema,
+    @CurrentUser() user: TokenPayload,
   ) {
-    const { name, managerId, userId } = body;
+    const { name, managerId } = body;
 
     const result = await this.useCase.execute({
       id,
       name,
       managerId,
-      userId,
+      userId: user.sub,
     });
 
     if (result.isLeft()) {

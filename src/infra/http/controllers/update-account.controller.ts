@@ -5,7 +5,6 @@ import {
   Controller,
   Param,
   Put,
-  UsePipes,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
@@ -31,7 +30,6 @@ type UpdateAccountParamsSchema = z.infer<typeof updateAccountParamsSchema>;
 export class UpdateAccountController {
   constructor(private useCase: UpdateUserUseCase) {}
 
-  @UsePipes()
   @Put()
   async handle(
     @Body(new ZodValidationPipe(updateAccountBodySchema))

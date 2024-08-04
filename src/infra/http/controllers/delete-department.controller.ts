@@ -7,13 +7,14 @@ import {
   NotFoundException,
   Param,
   UnauthorizedException,
-  UsePipes,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { DeleteDepartmentUseCase } from '@/domain/RH/application/use-cases/delete-department';
 import { DepartmentNotFoundError } from '@/domain/RH/application/use-cases/errors/department-not-found';
 import { NotAuthorizedError } from '@/domain/RH/application/use-cases/errors/not-authorized-error';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { TokenPayload } from '@/infra/auth/jwt-strategy';
 
 const deleteDepartmentParamsSchema = z.object({
   id: z.string(),
@@ -27,13 +28,16 @@ type DeleteDepartmentParamsSchema = z.infer<
 export class DeleteDepartmentController {
   constructor(private useCase: DeleteDepartmentUseCase) {}
 
-  @UsePipes(new ZodValidationPipe(deleteDepartmentParamsSchema))
   @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async handle(@Param() { id }: DeleteDepartmentParamsSchema) {
+  async handle(
+    @Param(new ZodValidationPipe(deleteDepartmentParamsSchema))
+    { id }: DeleteDepartmentParamsSchema,
+    @CurrentUser() user: TokenPayload,
+  ) {
     const result = await this.useCase.execute({
       id,
-      userId: '',
+      userId: user.sub,
     });
 
     if (result.isLeft()) {

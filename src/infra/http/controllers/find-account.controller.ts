@@ -4,7 +4,6 @@ import {
   Get,
   NotFoundException,
   Param,
-  UsePipes,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
@@ -22,9 +21,11 @@ type FindAccountParamsSchema = z.infer<typeof findAccountParamsSchema>;
 export class FindAccountController {
   constructor(private useCase: FindUserUseCase) {}
 
-  @UsePipes(new ZodValidationPipe(findAccountParamsSchema))
   @Get()
-  async handle(@Param() { id }: FindAccountParamsSchema) {
+  async handle(
+    @Param(new ZodValidationPipe(findAccountParamsSchema))
+    { id }: FindAccountParamsSchema,
+  ) {
     const result = await this.useCase.execute({
       id,
     });

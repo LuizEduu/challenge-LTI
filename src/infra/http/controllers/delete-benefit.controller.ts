@@ -7,7 +7,6 @@ import {
   NotFoundException,
   Param,
   UnauthorizedException,
-  UsePipes,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
@@ -25,10 +24,12 @@ type DeleteBenefitParamsSchema = z.infer<typeof deleteBenefitParamsSchema>;
 export class DeleteBenefitController {
   constructor(private useCase: DeleteBenefitUseCase) {}
 
-  @UsePipes(new ZodValidationPipe(deleteBenefitParamsSchema))
   @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async handle(@Param() { id }: DeleteBenefitParamsSchema) {
+  async handle(
+    @Param(new ZodValidationPipe(deleteBenefitParamsSchema))
+    { id }: DeleteBenefitParamsSchema,
+  ) {
     const result = await this.useCase.execute({
       id,
     });

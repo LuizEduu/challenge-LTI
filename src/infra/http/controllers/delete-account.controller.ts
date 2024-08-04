@@ -6,7 +6,6 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
-  UsePipes,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { z } from 'zod';
@@ -23,10 +22,12 @@ type DeleteAccountParamsSchema = z.infer<typeof deleteAccountParamsSchema>;
 export class DeleteAccountController {
   constructor(private useCase: DeleteUserUseCase) {}
 
-  @UsePipes(new ZodValidationPipe(deleteAccountParamsSchema))
   @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async handle(@Param() { id }: DeleteAccountParamsSchema) {
+  async handle(
+    @Param(new ZodValidationPipe(deleteAccountParamsSchema))
+    { id }: DeleteAccountParamsSchema,
+  ) {
     const result = await this.useCase.execute({
       id,
     });

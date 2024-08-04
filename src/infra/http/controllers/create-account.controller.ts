@@ -13,6 +13,7 @@ import { CreateUserUseCase } from '@/domain/RH/application/use-cases/create-user
 import { UserAlreadyExistsError } from '@/domain/RH/application/use-cases/errors/user-already-exists';
 import { HttpUserPresenter } from '../presenters/http-users-presenter';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { Public } from '@/infra/auth/public';
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -29,6 +30,7 @@ type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>;
 export class CreateAccountController {
   constructor(private useCase: CreateUserUseCase) {}
 
+  @Public()
   @UsePipes(new ZodValidationPipe(createAccountBodySchema))
   @Post()
   @HttpCode(HttpStatus.CREATED)

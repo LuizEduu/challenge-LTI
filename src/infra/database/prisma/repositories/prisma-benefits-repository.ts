@@ -38,6 +38,7 @@ export class PrismaBenefitsRepository implements BenefitsRepository {
     name,
     description,
     createdAt,
+    value,
   }: fetchByParamsRequest): Promise<Benefit[]> {
     const benefits = await this.prisma.benefit.findMany({
       where: {
@@ -49,6 +50,7 @@ export class PrismaBenefitsRepository implements BenefitsRepository {
         createdAt: {
           gte: createdAt,
         },
+        value,
       },
     });
 

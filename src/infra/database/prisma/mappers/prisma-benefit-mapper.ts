@@ -8,6 +8,7 @@ export class PrismaBenefitMapper {
       {
         name: raw.name,
         description: raw.description,
+        value: raw.value,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
       },
@@ -20,6 +21,7 @@ export class PrismaBenefitMapper {
       id: benefit.id.toString(),
       name: benefit.name,
       description: benefit.description,
+      value: benefit.value,
       createdAt: benefit.createdAt,
       updatedAt: benefit.updatedAt ?? undefined,
     };

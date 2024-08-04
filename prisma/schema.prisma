@@ -59,13 +59,14 @@ model UserDepartment {
 }
 
 model Benefit {
-  id           String         @id @default(uuid())
-  name         String         @unique
-  description  String
-  createdAt    DateTime       @default(now()) @map("created_at")
-  updatedAt    DateTime       @updatedAt @map("updated_at")
-  value        Float          @default(0)
-  UserBenefits UserBenefits[]
+  id              String            @id @default(uuid())
+  name            String            @unique
+  description     String
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  value           Float
+  UserBenefits    UserBenefits[]
+  PayrollBenefits PayrollBenefits[]
 
   @@map("benefits")
 }
@@ -94,6 +95,19 @@ model Payroll {
   updatedAt    DateTime @updatedAt
   emplooyeId   String
 
-  user       User       @relation(fields: [emplooyeId], references: [id])
-  department Department @relation(fields: [departmentId], references: [id])
+  user            User              @relation(fields: [emplooyeId], references: [id])
+  department      Department        @relation(fields: [departmentId], references: [id])
+  PayrollBenefits PayrollBenefits[]
+}
+
+model PayrollBenefits {
+  id        String   @id @default(uuid())
+  payrollId String   @map("payroll_id")
+  benefitId String   @map("benefit_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  payroll Payroll @relation(fields: [payrollId], references: [id])
+  benefit Benefit @relation(fields: [benefitId], references: [id])
+
+  @@map("payroll_benefits")
 }

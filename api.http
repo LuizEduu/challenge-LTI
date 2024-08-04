@@ -5,11 +5,11 @@ Content-Type: application/json
 
 {
     "name": "Luiz Eduardo",
-    "email": "luiz0223212@test.com",
+    "email": "luiz.emplooye@test.com",
     "password": "12345678",
-    "role": "manager",
+    "role": "emplooye",
     "departmentsIds": ["44cad2cc-c519-4fef-9c68-54565efd758e"],
-    "benefitsIds": ["4103f246-e0b8-47a2-ab1c-ab47a1296eac"]
+    "benefitsIds": ["3ab17384-fa3c-4390-8359-e29175719400", "5c87eb0a-c9d9-4001-88cf-48de2b336268"]
 }
 ###
 
@@ -83,8 +83,9 @@ Content-Type:  application/json
 Authorization: Bearer {{authToken}} 
 
 {
-    "name": "Plano de saúde",
-    "description": "Plano de saúde que atende no pais inteiro sem cooparticipação(sonho)"
+    "name": "Vale transporte",
+    "description": "Cartão para uso nos onibus para o trabalho",
+    "value": 324.50
 }
 ###
 GET http://localhost:3000/benefits?description=plano
@@ -113,12 +114,12 @@ Authorization: Bearer {{authToken}}
 
 {
     "name": "Relatório de pagamento",
-    "firstPeriod": "2024-07-01",
-    "lastPeriod": "2024-08-10",
+    "firstPeriod": "2024-08-17",
+    "lastPeriod": "2024-08-18",
     "departmentId": "44cad2cc-c519-4fef-9c68-54565efd758e",
     "month": 7,
     "year": 2024,
-    "employeeId": "177a8df4-6291-4cb9-82a9-7e166d9c1cae",
+    "employeeId": "86b8ed20-6ce8-46a2-a5d2-3b0072012535",
     "hoursWorked": 168,
     "hourValue": 20
 }

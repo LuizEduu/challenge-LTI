@@ -5,7 +5,7 @@ import { Optional } from '@/core/types/optional';
 type BenefitProps = {
   name: string;
   description: string;
-  value: number | null;
+  value: number;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -27,7 +27,7 @@ export class Benefit extends Entity<BenefitProps> {
     this.props.description = description;
   }
 
-  get value(): number | null {
+  get value(): number {
     return this.props.value;
   }
 
@@ -48,13 +48,13 @@ export class Benefit extends Entity<BenefitProps> {
   }
 
   static create(
-    props: Optional<BenefitProps, 'createdAt' | 'value'>,
+    props: Optional<BenefitProps, 'createdAt'>,
     id?: UniqueEntityID,
   ) {
     return new Benefit(
       {
         ...props,
-        value: props.value ?? null,
+        value: props.value ?? 0,
       },
       id,
     );

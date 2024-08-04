@@ -23,6 +23,7 @@ export class PrismaPayrollMapper {
 
   static toPrisma(payroll: Payroll): Prisma.PayrollUncheckedCreateInput {
     return {
+      id: payroll.id.toString(),
       name: payroll.name,
       firstPeriod: payroll.firstPeriod,
       departmentId: payroll.departmentId.toString(),

@@ -12,6 +12,8 @@ import { UsersBenefitsRepository } from '@/domain/RH/application/repositories/us
 import { PrismaUsersBenefitsRepository } from './prisma/repositories/prisma-users-benefits-repository';
 import { PayrollRepository } from '@/domain/RH/application/repositories/payroll-repository';
 import { PrismaPayrollRepository } from './prisma/repositories/prisma-payroll-repository';
+import { PayrollBenefitsRepository } from '@/domain/RH/application/repositories/payroll-benefits-repository';
+import { PrismaPayrollBenefitsRepository } from './prisma/repositories/prisma-payroll-benefits-repository';
 
 @Module({
   providers: [
@@ -40,6 +42,10 @@ import { PrismaPayrollRepository } from './prisma/repositories/prisma-payroll-re
       provide: PayrollRepository,
       useClass: PrismaPayrollRepository,
     },
+    {
+      provide: PayrollBenefitsRepository,
+      useClass: PrismaPayrollBenefitsRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -49,6 +55,7 @@ import { PrismaPayrollRepository } from './prisma/repositories/prisma-payroll-re
     BenefitsRepository,
     UsersBenefitsRepository,
     PayrollRepository,
+    PayrollBenefitsRepository,
   ],
 })
 export class DatabaseModule {}

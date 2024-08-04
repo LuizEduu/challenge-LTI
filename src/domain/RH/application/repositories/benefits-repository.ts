@@ -5,6 +5,7 @@ export type fetchByParamsRequest = {
   name?: string;
   description?: string;
   createdAt?: Date;
+  value?: number;
 };
 
 export abstract class BenefitsRepository {

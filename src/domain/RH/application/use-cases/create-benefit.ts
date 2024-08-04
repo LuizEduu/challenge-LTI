@@ -7,6 +7,7 @@ import { BenefitsRepository } from '../repositories/benefits-repository';
 type CreateBenefitUseCaseRequest = {
   name: string;
   description: string;
+  value: number;
 };
 
 type CreateBenefitUseCaseResponse = Either<
@@ -23,6 +24,7 @@ export class CreateBenefitUseCase {
   async execute({
     name,
     description,
+    value,
   }: CreateBenefitUseCaseRequest): Promise<CreateBenefitUseCaseResponse> {
     const benefitAlreadyExists = await this.benefitsRepository.findByName(name);
 
@@ -33,6 +35,7 @@ export class CreateBenefitUseCase {
     const benefit = Benefit.create({
       name,
       description,
+      value: value,
     });
 
     await this.benefitsRepository.create(benefit);

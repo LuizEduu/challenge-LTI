@@ -17,6 +17,7 @@ import { HttpBenefitsPresenter } from '../presenters/http-benefits-presenter';
 const createBenefitBodySchema = z.object({
   name: z.string(),
   description: z.string(),
+  value: z.number(),
 });
 
 type CreateBenefitBodySchema = z.infer<typeof createBenefitBodySchema>;
@@ -29,11 +30,12 @@ export class CreateBenefitController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async handle(@Body() body: CreateBenefitBodySchema) {
-    const { name, description } = body;
+    const { name, description, value } = body;
 
     const result = await this.useCase.execute({
       name,
       description,
+      value,
     });
 
     if (result.isLeft()) {

@@ -6,10 +6,16 @@ import { Payroll } from '@/domain/RH/enterprise/entities/payroll';
 import { PrismaService } from '../prisma.service';
 import { PrismaPayrollMapper } from '../mappers/prisma-payroll-mapper';
 import { Injectable } from '@nestjs/common';
+import { PayrollBenefitsRepository } from '@/domain/RH/application/repositories/payroll-benefits-repository';
+import { PayrollBenefits } from '@/domain/RH/enterprise/entities/payroll-benefits';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 @Injectable()
 export class PrismaPayrollRepository implements PayrollRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private payrollBenefitsRepository: PayrollBenefitsRepository,
+  ) {}
 
   async findByPeriod({
     firstPeriod,
@@ -41,5 +47,15 @@ export class PrismaPayrollRepository implements PayrollRepository {
     await this.prisma.payroll.create({
       data,
     });
+
+    const payrollBenefits = payroll.benefitsIds?.map((id) =>
+      PayrollBenefits.create({
+        benefitId: new UniqueEntityID(id),
+        payrollId: payroll.id,
+      }),
+    );
+
+    payrollBenefits?.length &&
+      (await this.payrollBenefitsRepository.create(payrollBenefits));
   }
 }

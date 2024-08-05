@@ -1,23 +1,35 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { User } from '@/domain/RH/enterprise/entities/user';
-import { UserDepartments } from '@/domain/RH/enterprise/entities/user-departments';
-import { $Enums, Prisma, User as PrismaUser, UserRole } from '@prisma/client';
+import { UserWithDepartmentsAndBenefits } from '@/domain/RH/enterprise/entities/value-objects/user-with-departments-and-benefits';
+import { Prisma, User as PrismaUser, UserRole } from '@prisma/client';
 
-type fetchUsersWithDepartments = {
+type fetchUsersWithDepartmentsAndBenefits = PrismaUser & {
   UserDepartment: {
     id: string;
     userId: string;
     departmentId: string;
     createdAt: Date;
+    department: {
+      id: string;
+      name: string;
+      managerId: string;
+      createdAt: Date;
+      updatedAt: Date;
+    };
   }[];
-} & {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  role: $Enums.UserRole;
-  createdAt: Date;
-  updatedAt: Date;
+  UserBenefits: {
+    id: string;
+    benefitId: string;
+    userId: string;
+    benefit: {
+      id: string;
+      name: string;
+      description: string;
+      createdAt: Date;
+      updatedAt: Date;
+      value: number;
+    };
+  }[];
 };
 
 export class PrismaUserMapper {
@@ -51,27 +63,26 @@ export class PrismaUserMapper {
     }
   }
 
-  static toDomainWIthDeparments(raw: fetchUsersWithDepartments) {
-    return User.create(
-      {
-        name: raw.name,
-        email: raw.email,
-        password: raw.password,
-        role: raw.role.toString(),
-        createdAt: raw.createdAt,
-        updatedAt: raw.updatedAt,
-        userDepartments: raw.UserDepartment.map((department) => {
-          return UserDepartments.create(
-            {
-              departmentId: new UniqueEntityID(department.departmentId),
-              userId: new UniqueEntityID(raw.id),
-              createdAt: department.createdAt,
-            },
-            new UniqueEntityID(department.id),
-          );
-        }),
-      },
-      new UniqueEntityID(raw.id),
-    );
+  static toDomainWIthDeparmentsAndBenefits(
+    raw: fetchUsersWithDepartmentsAndBenefits,
+  ) {
+    return UserWithDepartmentsAndBenefits.create({
+      userId: new UniqueEntityID(raw.id),
+      name: raw.name,
+      email: raw.email,
+      role: raw.role.toString(),
+      createdAt: raw.createdAt,
+      updatedAt: raw.updatedAt,
+      benefits: raw.UserBenefits.map((userBenefit) => ({
+        id: new UniqueEntityID(userBenefit.benefit.id),
+        name: userBenefit.benefit.name,
+        description: userBenefit.benefit.description,
+      })),
+      departments: raw.UserDepartment.map((userDepartment) => ({
+        id: new UniqueEntityID(userDepartment.department.id),
+        name: userDepartment.department.name,
+        managerId: new UniqueEntityID(userDepartment.department.managerId),
+      })),
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '../../enterprise/entities/user';
 import { Either, right } from '@/core/either';
 import { UsersRepository } from '../repositories/users-repository';
+import { UserWithDepartmentsAndBenefits } from '../../enterprise/entities/value-objects/user-with-departments-and-benefits';
 
 type FetchUsersUseCaseRequest = {
   id?: string;
@@ -14,7 +14,7 @@ type FetchUsersUseCaseRequest = {
 type FetchUsersUseCaseResponse = Either<
   null,
   {
-    users: User[];
+    users: UserWithDepartmentsAndBenefits[];
   }
 >;
 

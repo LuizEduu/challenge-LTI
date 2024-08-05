@@ -12,6 +12,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { UsersBenefitsRepository } from '@/domain/RH/application/repositories/users-benefits-repository';
 import { UserBenefits } from '@/domain/RH/enterprise/entities/user-benefits';
 import { UserRole } from '@prisma/client';
+import { UserWithDepartmentsAndBenefits } from '@/domain/RH/enterprise/entities/value-objects/user-with-departments-and-benefits';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
@@ -67,7 +68,7 @@ export class PrismaUsersRepository implements UsersRepository {
     name,
     role,
     createdAt,
-  }: fetchByParamsRequest): Promise<User[]> {
+  }: fetchByParamsRequest): Promise<UserWithDepartmentsAndBenefits[]> {
     const users = await this.prisma.user.findMany({
       where: {
         id: id,
@@ -79,11 +80,20 @@ export class PrismaUsersRepository implements UsersRepository {
         },
       },
       include: {
-        UserDepartment: true,
+        UserDepartment: {
+          include: {
+            department: true,
+          },
+        },
+        UserBenefits: {
+          include: {
+            benefit: true,
+          },
+        },
       },
     });
 
-    return users.map(PrismaUserMapper.toDomainWIthDeparments);
+    return users.map(PrismaUserMapper.toDomainWIthDeparmentsAndBenefits);
   }
 
   async findById(id: string): Promise<User | null> {

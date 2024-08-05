@@ -32,7 +32,9 @@ export class FetchAccountsController {
     });
 
     return {
-      users: result.value?.users.map(HttpUserPresenter.toHTTP),
+      users: result.value?.users.map(
+        HttpUserPresenter.toHTTPUsersWithDepartmentsAndBenefits,
+      ),
     };
   }
 }

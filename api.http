@@ -47,7 +47,8 @@ Authorization: Bearer {{authToken}}
     "name": "Luiz Eduardo atualizado",
     "email": "luiz03atualizado@test.com",
     "role": "emplooye",
-    "departmentsIds": ["0d9bb203-7253-405a-91a1-13c958ba7ec5"]
+    "departmentsIds": ["0d9bb203-7253-405a-91a1-13c958ba7ec5"],
+    "benefitsIds": ["75064085-f728-4af1-9d29-ab86bcebf749"]
 }
 ###
 

@@ -15,8 +15,10 @@ import { HttpUserPresenter } from '../presenters/http-users-presenter';
 const updateAccountBodySchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().optional(),
   role: z.enum(['emplooye', 'manager']),
+  departmentsIds: z.array(z.string()).optional(),
+  benefitsIds: z.array(z.string()).optional(),
 });
 
 const updateAccountParamsSchema = z.object({
@@ -37,7 +39,7 @@ export class UpdateAccountController {
     @Param(new ZodValidationPipe(updateAccountParamsSchema))
     { id }: UpdateAccountParamsSchema,
   ) {
-    const { name, email, password, role } = body;
+    const { name, email, password, role, departmentsIds, benefitsIds } = body;
 
     const result = await this.useCase.execute({
       id,
@@ -45,6 +47,8 @@ export class UpdateAccountController {
       email,
       password,
       role,
+      departmentsIds,
+      benefitsIds,
     });
 
     if (result.isLeft()) {

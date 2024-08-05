@@ -48,6 +48,7 @@ Este projeto é uma aplicação desenvolvida usando **Node.js**, **Docker**, **M
    docker compose up -d
    docker exec -it challenge-lti-app bash
    npm install
+   npx prisma migrate dev
    npm run start:dev
    ```
 
@@ -56,7 +57,8 @@ Este projeto é uma aplicação desenvolvida usando **Node.js**, **Docker**, **M
 ```bash
 1. Acessar a raiz do projeto
 2. executar o comando npm install para instalação das dependencias
-3. npm run start:dev para executar a aplicação
+3. executar o comando npx prisma migrate dev para rodar as migrations do banco de dados
+4. npm run start:dev para executar a aplicação
 ```
 
 ### Consumo

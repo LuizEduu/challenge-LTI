@@ -37,4 +37,18 @@ export class PrismaUsersDepartmentsRepository
 
     return userDepartments.map(PrismaUsersDepartmentsMapper.toDomain);
   }
+
+  async update(userDepartments: UserDepartments[]): Promise<void> {
+    await this.prisma.userDepartment.deleteMany({
+      where: {
+        userId: userDepartments[0].id.toString(),
+      },
+    });
+
+    const data = userDepartments.map(PrismaUsersDepartmentsMapper.toPrisma);
+
+    await this.prisma.userDepartment.createMany({
+      data,
+    });
+  }
 }

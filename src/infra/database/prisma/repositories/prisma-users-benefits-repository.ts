@@ -41,4 +41,18 @@ export class PrismaUsersBenefitsRepository implements UsersBenefitsRepository {
 
     return userBenefits.map(PrismaUserBenefitMapper.toDomainWithBenefitFields);
   }
+
+  async update(userBenefits: UserBenefits[]): Promise<void> {
+    await this.prisma.userBenefits.deleteMany({
+      where: {
+        userId: userBenefits[0].id.toString(),
+      },
+    });
+
+    const data = userBenefits.map(PrismaUserBenefitMapper.toPrisma);
+
+    await this.prisma.userBenefits.createMany({
+      data,
+    });
+  }
 }

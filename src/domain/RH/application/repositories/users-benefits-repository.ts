@@ -7,4 +7,5 @@ export abstract class UsersBenefitsRepository {
   abstract findManyByUserId(
     userId: string,
   ): Promise<UserBenefitsWithBenefitsFields[]>;
+  abstract update(userBenefits: UserBenefits[]): Promise<void>;
 }

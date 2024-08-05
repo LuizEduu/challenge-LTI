@@ -7,9 +7,9 @@ Content-Type: application/json
     "name": "Luiz Emplooye 4",
     "email": "luiz.employee4@test.com",
     "password": "12345678",
-    "role": "emplooye",
-    "departmentsIds": ["a7cf0552-bc7d-435b-9ef1-4ca214ac88b6"],
-    "benefitsIds": ["64f6c3fa-536e-4d96-982a-3008aae7dc7e", "08335306-b2aa-4754-a1cf-40f3c5a9d31d"]
+    "role": "emplooye"
+    //"departmentsIds": ["a7cf0552-bc7d-435b-9ef1-4ca214ac88b6"],
+    //"benefitsIds": ["64f6c3fa-536e-4d96-982a-3008aae7dc7e", "08335306-b2aa-4754-a1cf-40f3c5a9d31d"]
 
 }
 ###
@@ -19,7 +19,7 @@ POST http://localhost:3000/sessions
 Content-Type: application/json
 
 {
-    "email": "luiz.manager@test.com",
+    "email": "luiz.employee4@test.com",
     "password": "12345678"
 }
 ###
@@ -39,15 +39,15 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}} 
 ###
 
-PUT http://localhost:3000/users/049459bf-2c99-45f5-9f57-ffc212577bc1
+PUT http://localhost:3000/users/2ade0e92-55a7-4f73-b98f-ae1a4406286b
 Content-Type: application/json
 Authorization: Bearer {{authToken}} 
 
 {
     "name": "Luiz Eduardo atualizado",
     "email": "luiz03atualizado@test.com",
-    "password": "123456789",
-    "role": "emplooye"
+    "role": "emplooye",
+    "departmentsIds": ["0d9bb203-7253-405a-91a1-13c958ba7ec5"]
 }
 ###
 
@@ -56,10 +56,12 @@ Content-Type:  application/json
 Authorization: Bearer {{authToken}} 
 
 {
-    "name": "Marketing"
+    "name": "Vendas"
 }
 ###
 GET http://localhost:3000/departments
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
 ###
 
 PUT http://localhost:3000/departments/44cad2cc-c519-4fef-9c68-54565efd758e

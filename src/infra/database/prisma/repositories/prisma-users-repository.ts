@@ -6,12 +6,12 @@ import {
 } from '@/domain/RH/application/repositories/users-repository';
 import { User } from '@/domain/RH/enterprise/entities/user';
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper';
-import { UserRole } from '@prisma/client';
 import { UsersDepartmentsRepository } from '@/domain/RH/application/repositories/users-departments-repository';
 import { UserDepartments } from '@/domain/RH/enterprise/entities/user-departments';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { UsersBenefitsRepository } from '@/domain/RH/application/repositories/users-benefits-repository';
 import { UserBenefits } from '@/domain/RH/enterprise/entities/user-benefits';
+import { UserRole } from '@prisma/client';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
@@ -117,5 +117,25 @@ export class PrismaUsersRepository implements UsersRepository {
         id: user.id.toString(),
       },
     });
+
+    const userDepartments = user.departmentsIds?.map((id) =>
+      UserDepartments.create({
+        departmentId: new UniqueEntityID(id),
+        userId: user.id,
+      }),
+    );
+
+    const userBenefits = user.benefitsIds?.map((id) =>
+      UserBenefits.create({
+        benefitId: new UniqueEntityID(id),
+        userId: user.id,
+      }),
+    );
+
+    await Promise.all([
+      userDepartments.length &&
+        this.usersDepartmentsRepository.update(userDepartments),
+      userBenefits.length && this.usersBenefitsRepository.update(userBenefits),
+    ]);
   }
 }

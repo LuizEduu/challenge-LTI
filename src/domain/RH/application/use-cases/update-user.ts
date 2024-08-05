@@ -9,8 +9,10 @@ type UpdateUserUseCaseRequest = {
   id: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   role: string;
+  departmentsIds?: string[];
+  benefitsIds?: string[];
 };
 
 type UpdateUserUseCaseResponse = Either<
@@ -33,6 +35,8 @@ export class UpdateUserUseCase {
     email,
     password,
     role,
+    departmentsIds,
+    benefitsIds,
   }: UpdateUserUseCaseRequest): Promise<UpdateUserUseCaseResponse> {
     const user = await this.usersRepository.findById(id);
 
@@ -46,6 +50,14 @@ export class UpdateUserUseCase {
 
     if (password) {
       user.password = await this.hashGeneartor.hash(password);
+    }
+
+    if (departmentsIds?.length) {
+      user.departmentsIds = departmentsIds;
+    }
+
+    if (benefitsIds) {
+      user.benefitsIds = benefitsIds;
     }
 
     user.updatedAt = new Date();

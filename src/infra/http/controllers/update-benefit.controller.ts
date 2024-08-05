@@ -49,7 +49,7 @@ export class UpdateBenefitController {
         case BenefitNotFoundError:
           throw new NotFoundException(error.message);
         default:
-          throw new BadRequestException();
+          throw new BadRequestException(error.message);
       }
     }
 

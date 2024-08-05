@@ -49,7 +49,7 @@ export class CreateDeparmentController {
         case DepartmentAlreadyExistsError:
           throw new ConflictException(error.message);
         default:
-          throw new BadRequestException();
+          throw new BadRequestException(error.message);
       }
     }
 

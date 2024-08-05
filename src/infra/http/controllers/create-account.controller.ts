@@ -50,9 +50,9 @@ export class CreateAccountController {
       const error = result.value;
       switch (error.constructor) {
         case UserAlreadyExistsError:
-          throw new ConflictException();
+          throw new ConflictException(error.message);
         default:
-          throw new BadRequestException();
+          throw new BadRequestException(error.message);
       }
     }
 

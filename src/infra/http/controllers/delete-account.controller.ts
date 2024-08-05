@@ -38,7 +38,7 @@ export class DeleteAccountController {
         case UserNotFoundError:
           throw new NotFoundException(error.message);
         default:
-          throw new BadRequestException();
+          throw new BadRequestException(error.message);
       }
     }
   }

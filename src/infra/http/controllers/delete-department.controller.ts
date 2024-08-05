@@ -48,7 +48,7 @@ export class DeleteDepartmentController {
         case NotAuthorizedError:
           throw new UnauthorizedException(error.message);
         default:
-          throw new BadRequestException();
+          throw new BadRequestException(error.message);
       }
     }
   }

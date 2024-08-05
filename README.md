@@ -35,14 +35,14 @@ Este projeto é uma aplicação desenvolvida usando **Node.js**, **Docker**, **M
    ```bash
    docker compose up -d
    docker exec -it challenge-lti-app bash
+   npm install
    npm run start:dev
    ```
 
 ### Caso não tenha o docker instalado executar com o NodeJs no mínimo a versão 20 na máquina
 
-1. Acessar a raiz do projeto
-
 ```bash
+1. Acessar a raiz do projeto
 2. executar o comando npm install para instalação das dependencias
 3. npm run start:dev para executar a aplicação
 ```
@@ -56,7 +56,3 @@ Este projeto é uma aplicação desenvolvida usando **Node.js**, **Docker**, **M
 ### Informações Adicionais
 
 Se precisar de mais informações ou tiver dúvidas sobre o projeto, entre em contato comigo atrávez do whatsapp ou e-mail.
-
-```
-
-```

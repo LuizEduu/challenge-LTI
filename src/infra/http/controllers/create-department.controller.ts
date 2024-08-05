@@ -15,6 +15,7 @@ import { UserNotFoundError } from '@/domain/RH/application/use-cases/errors/user
 import { DepartmentAlreadyExistsError } from '@/domain/RH/application/use-cases/errors/department-already-exists';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { TokenPayload } from '@/infra/auth/jwt-strategy';
+import { HttpDepartmentsPresenter } from '../presenters/http-departments-presenter';
 
 const createDeparmentBodySchema = z.object({
   name: z.string(),
@@ -54,7 +55,7 @@ export class CreateDeparmentController {
     }
 
     return {
-      department: result.value.department,
+      department: HttpDepartmentsPresenter.toHTTP(result.value.department),
     };
   }
 }

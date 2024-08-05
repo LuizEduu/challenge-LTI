@@ -15,6 +15,18 @@ Este projeto é uma aplicação desenvolvida usando **Node.js**, **Docker**, **M
 - Busquei utilizar dos conceitos do clean arch como separação das minhas camadas de aplicação e desacoplamento de tecnologias externas
   como lib para autenticação, hash de senha, conexão e consultas com os bancos.
 
+### Core
+
+- Arquivos essenciais que serão compartilhados entre a camada de negocio do projeto.
+
+### Domain
+
+- Camada de negocio do projeto, ali fica todas as entidades de dominio, regras de negocio que são o coração da aplicação, desacopladas de framewoks e libs
+
+### Infra
+
+- Camada mais externa, ali fica configuração de conexões, acesso a aplicação como http, libs externas como lib para autenticação, lib para banco de dados e afins.
+
 ## Observações
 
 - **Segurança**: Sei que não é recomendado commitar arquivos `.env` por questões de segurança, para facilitar o teste da aplicação, o arquivo `.env` foi incluído no repositório.

@@ -4,12 +4,13 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "Luiz Eduardo",
-    "email": "luiz.emplooye@test.com",
+    "name": "Luiz Emplooye 4",
+    "email": "luiz.employee4@test.com",
     "password": "12345678",
     "role": "emplooye",
-    "departmentsIds": ["44cad2cc-c519-4fef-9c68-54565efd758e"],
-    "benefitsIds": ["3ab17384-fa3c-4390-8359-e29175719400", "5c87eb0a-c9d9-4001-88cf-48de2b336268"]
+    "departmentsIds": ["a7cf0552-bc7d-435b-9ef1-4ca214ac88b6"],
+    "benefitsIds": ["64f6c3fa-536e-4d96-982a-3008aae7dc7e", "08335306-b2aa-4754-a1cf-40f3c5a9d31d"]
+
 }
 ###
 
@@ -18,7 +19,7 @@ POST http://localhost:3000/sessions
 Content-Type: application/json
 
 {
-    "email": "luiz0223212@test.com",
+    "email": "luiz.manager@test.com",
     "password": "12345678"
 }
 ###
@@ -55,8 +56,7 @@ Content-Type:  application/json
 Authorization: Bearer {{authToken}} 
 
 {
-    "name": "Teste delete",
-    "managerId": "049459bf-2c99-45f5-9f57-ffc212577bc1"
+    "name": "Marketing"
 }
 ###
 GET http://localhost:3000/departments
@@ -83,9 +83,9 @@ Content-Type:  application/json
 Authorization: Bearer {{authToken}} 
 
 {
-    "name": "Vale transporte",
-    "description": "Cartão para uso nos onibus para o trabalho",
-    "value": 324.50
+    "name": "Vale alimentação",
+    "description": "Cartão para comprar comida",
+    "value": 800
 }
 ###
 GET http://localhost:3000/benefits?description=plano
@@ -114,13 +114,17 @@ Authorization: Bearer {{authToken}}
 
 {
     "name": "Relatório de pagamento",
-    "firstPeriod": "2024-08-17",
-    "lastPeriod": "2024-08-18",
-    "departmentId": "44cad2cc-c519-4fef-9c68-54565efd758e",
-    "month": 7,
+    "firstPeriod": "2024-09-01",
+    "lastPeriod": "2024-09-03",
+    "departmentId": "a7cf0552-bc7d-435b-9ef1-4ca214ac88b6",
+    "month": 9,
     "year": 2024,
-    "employeeId": "86b8ed20-6ce8-46a2-a5d2-3b0072012535",
+    "employeeId": "3b9f1e52-7b43-4f32-8064-bc506b9e2f31",
     "hoursWorked": 168,
     "hourValue": 20
 }
 ###
+
+GET http://localhost:3000/payroll/reports?departmentIds=a7cf0552-bc7d-435b-9ef1-4ca214ac88b6
+Content-Type: application/json
+Authorization: Bearer {{authToken}}

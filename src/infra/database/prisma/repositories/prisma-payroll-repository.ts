@@ -1,4 +1,5 @@
 import {
+  fetchPayrollReportsParams,
   findByPeriodParams,
   PayrollRepository,
 } from '@/domain/RH/application/repositories/payroll-repository';
@@ -9,6 +10,7 @@ import { Injectable } from '@nestjs/common';
 import { PayrollBenefitsRepository } from '@/domain/RH/application/repositories/payroll-benefits-repository';
 import { PayrollBenefits } from '@/domain/RH/enterprise/entities/payroll-benefits';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { PayrollReport } from '@/domain/RH/enterprise/entities/value-objects/payroll report';
 
 @Injectable()
 export class PrismaPayrollRepository implements PayrollRepository {
@@ -57,5 +59,58 @@ export class PrismaPayrollRepository implements PayrollRepository {
 
     payrollBenefits?.length &&
       (await this.payrollBenefitsRepository.create(payrollBenefits));
+  }
+
+  async fetchPayrollReports({
+    departmentIds,
+    initialPeriod,
+    lastPeriod,
+    userId,
+  }: fetchPayrollReportsParams): Promise<PayrollReport[]> {
+    const filter: any = {};
+
+    // Adiciona filtros de data baseados nos campos da tabela
+    if (initialPeriod && lastPeriod) {
+      filter.firstPeriod = {
+        gte: initialPeriod,
+      };
+      filter.lastPeriod = {
+        lte: lastPeriod,
+      };
+    } else if (initialPeriod) {
+      filter.firstPeriod = {
+        gte: initialPeriod,
+      };
+    } else if (lastPeriod) {
+      filter.lastPeriod = {
+        lte: lastPeriod,
+      };
+    }
+
+    // Adiciona filtros de departmentId e userId, se fornecidos
+    if (departmentIds && departmentIds.length > 0) {
+      filter.departmentId = {
+        in: departmentIds,
+      };
+    }
+
+    if (userId) {
+      filter.emplooyeId = userId;
+    }
+
+    const payrollReports = await this.prisma.payroll.findMany({
+      where: filter,
+      include: {
+        department: true,
+        user: true,
+        PayrollBenefits: {
+          include: {
+            benefit: true,
+          },
+        },
+      },
+    });
+
+    return payrollReports.map(PrismaPayrollMapper.toDomainPayrollReport);
   }
 }

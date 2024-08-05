@@ -13,10 +13,11 @@ import { z } from 'zod';
 import { CreateDepartmentUseCase } from '@/domain/RH/application/use-cases/create-department';
 import { UserNotFoundError } from '@/domain/RH/application/use-cases/errors/user-not-found-error';
 import { DepartmentAlreadyExistsError } from '@/domain/RH/application/use-cases/errors/department-already-exists';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { TokenPayload } from '@/infra/auth/jwt-strategy';
 
 const createDeparmentBodySchema = z.object({
   name: z.string(),
-  managerId: z.string(),
 });
 
 type CreateDeparmentBodySchema = z.infer<typeof createDeparmentBodySchema>;
@@ -25,15 +26,19 @@ type CreateDeparmentBodySchema = z.infer<typeof createDeparmentBodySchema>;
 export class CreateDeparmentController {
   constructor(private useCase: CreateDepartmentUseCase) {}
 
-  @UsePipes(new ZodValidationPipe(createDeparmentBodySchema))
+  @UsePipes()
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async handle(@Body() body: CreateDeparmentBodySchema) {
-    const { name, managerId } = body;
+  async handle(
+    @Body(new ZodValidationPipe(createDeparmentBodySchema))
+    body: CreateDeparmentBodySchema,
+    @CurrentUser() user: TokenPayload,
+  ) {
+    const { name } = body;
 
     const result = await this.useCase.execute({
       name,
-      managerId,
+      managerId: user.sub,
     });
 
     if (result.isLeft()) {

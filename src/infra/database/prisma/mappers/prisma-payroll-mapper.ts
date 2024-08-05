@@ -1,6 +1,27 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Payroll } from '@/domain/RH/enterprise/entities/payroll';
-import { Prisma, Payroll as PrismaPayoll } from '@prisma/client';
+import { PayrollReport } from '@/domain/RH/enterprise/entities/value-objects/payroll report';
+import {
+  Prisma,
+  Payroll as PrismaPayoll,
+  Department as PrismaDepartment,
+  User as PrismaUser,
+} from '@prisma/client';
+
+type PrismaToDomainPayrollReport = PrismaPayoll & {
+  department: PrismaDepartment;
+  user: PrismaUser;
+  PayrollBenefits: {
+    benefit: {
+      id: string;
+      name: string;
+      description: string;
+      createdAt: Date;
+      updatedAt: Date;
+      value: number;
+    };
+  }[];
+};
 
 export class PrismaPayrollMapper {
   static toDomain(raw: PrismaPayoll): Payroll {
@@ -34,5 +55,25 @@ export class PrismaPayrollMapper {
       emplooyeId: payroll.emplooyeId.toString(),
       createdAt: payroll.createdAt,
     };
+  }
+
+  static toDomainPayrollReport(
+    raw: PrismaToDomainPayrollReport,
+  ): PayrollReport {
+    return PayrollReport.create({
+      emplooyeId: new UniqueEntityID(raw.user.id),
+      emplooyeName: raw.user.name,
+      employeEmail: raw.user.email,
+      departmentId: new UniqueEntityID(raw.department.id),
+      firstPeriod: raw.firstPeriod,
+      lastPeriod: raw.lastPeriod,
+      month: raw.month,
+      year: raw.year,
+      totalPayment: raw.totalPayment,
+      benefits: raw.PayrollBenefits.map((pb) => ({
+        name: pb.benefit.name,
+        value: pb.benefit.value,
+      })),
+    });
   }
 }

@@ -93,11 +93,13 @@ model Payroll {
   departmentId String   @map("department_id")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt
-  emplooyeId   String
+  emplooyeId   String   @map("emplooye_id")
 
   user            User              @relation(fields: [emplooyeId], references: [id])
   department      Department        @relation(fields: [departmentId], references: [id])
   PayrollBenefits PayrollBenefits[]
+
+  @@map("payroll")
 }
 
 model PayrollBenefits {

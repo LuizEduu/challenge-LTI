@@ -63,7 +63,7 @@ Este projeto é uma aplicação desenvolvida usando **Node.js**, **Docker**, **M
 
 ### Consumo
 
-**Caso esteja utilizando o Visual Studio Code, instale a extensão HTTP Client.**
+**Caso esteja utilizando o Visual Studio Code, instale a extensão Rest Client <https://marketplace.visualstudio.com/items?itemName=humao.rest-client>**
 
 - Utilize o arquivo api.http na raiz do projeto para testar as chamadas de API com exemplos prontos.
 
